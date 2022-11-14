@@ -7,7 +7,7 @@ http.createServer((request, response) => {
     parsedUrl = url.parse(address, true),
     filePath = '';
 
-    fs.appendFile('/logs/connection-log.txt', 'URL: ' + address + '\nTimestamp: ' + new Date() + '\n\n', (err) => {
+    fs.appendFile('../logs/connection-log.log', 'URL: ' + address + '\nTimestamp: ' + new Date() + '\n\n', (err) => {
         if (err) {
             console.log(err);
         } else {
@@ -16,9 +16,9 @@ http.createServer((request, response) => {
     });
 
     if (parsedUrl.pathname.includes('documentation')) {
-        filePath = (__dirname + '/documentation.html');
+        filePath = ('../html' + '/documentation.html');
     } else {
-        filePath = 'index.html';
+        filePath = '../html' + '/index.html';
     }
 
     fs.readFile(filePath, (err, data) => {
