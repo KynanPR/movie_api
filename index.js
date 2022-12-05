@@ -65,6 +65,12 @@ app.get('/movies', (req, res) => {
 });
 
 app.use(express.static('public'));
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Borked!');
+});
+
 app.listen(8080, () => {
     console.log('App listening on port 8080');
 });
