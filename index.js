@@ -4,6 +4,9 @@ const express = require('express'),
     path = require('path');
 
 const app = express();
+
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.log'), {flags: 'a'});
+
 let movies = [
     {
         name: 'Good Will Hunting',
@@ -46,6 +49,8 @@ let movies = [
         releaseYear: '2022',
     },
 ];
+
+app.use(morgan('combined', {stream: accessLogStream}));
 
 app.get('/', (req, res) => {
     res.send('Movies API');
