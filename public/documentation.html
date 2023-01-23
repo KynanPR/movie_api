@@ -1,14 +1,225 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Movie API - Docs</title>
-    </head>
-    <body>
-        <h1>Movie API</h1>
-        <h2>Purpose:</h2>
-        <p>This API is a project as part of my Full Stack Web Developer course at Career Foundry</p>
-        <p>It is an API to query for details about films</p>
-    </body>
-</html>
+<p>Movie API - Docs</p>
+
+<h1>Movie API</h1>
+
+<h2>Purpose</h2>
+
+<p>This API is a project as part of my Full Stack Web Developer course at Career Foundry</p>
+
+<p>It is an API to query for details about films</p>
+
+<h2>Standard Data Objects</h2>
+
+<p>There are a number of data objects used throughout this API which are outlined here so they can be abreviated later</p>
+
+<table border="2">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Tag</th>
+			<th>Description</th>
+			<th>Format</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Movie Data - Basic</td>
+			<td>$movieBasic</td>
+			<td>Basic data about a movie for large and initial queries</td>
+			<td>{&quot;movieId&quot;:[MID], &quot;Title&quot;:[string], &quot;Year&quot;:[yyyy]}</td>
+		</tr>
+		<tr>
+			<td>Movie Data - Detail</td>
+			<td>$movieDetail</td>
+			<td>Full detailed data about a movie</td>
+			<td>{&quot;movieId&quot;:[MID], &quot;Title&quot;:[string], &quot;Year&quot;:[yyyy], $genre, $director, &quot;description&quot;:[string]}</td>
+		</tr>
+		<tr>
+			<td>Genre Data</td>
+			<td>$genre</td>
+			<td>Basic data about a genre</td>
+			<td>{&quot;genreId&quot;:[GID], &quot;genre&quot;:[string], &quot;movieCount&quot;:[int]}</td>
+		</tr>
+		<tr>
+			<td>Director Data</td>
+			<td>$director</td>
+			<td>Basic data about a director</td>
+			<td>{&quot;directorId&quot;:[DID], &quot;director&quot;:[string], &quot;yob&quot;:[yyyy], &quot;yod&quot;:[yyyy], &quot;movieCount&quot;:[int]}</td>
+		</tr>
+		<tr>
+			<td>User Info</td>
+			<td>$userInfo</td>
+			<td>Basic user info</td>
+			<td>{&quot;Username&quot;:[string], &quot;Name&quot;:[string]}</td>
+		</tr>
+	</tbody>
+</table>
+
+<h2>Endpoints</h2>
+
+<table border="2">
+	<thead>
+		<tr>
+			<th>Catagory</th>
+			<th>Endpoint</th>
+			<th>URL</th>
+			<th>Method</th>
+			<th>Function</th>
+			<th>Sent</th>
+			<th>Sent - Detial</th>
+			<th>Returned</th>
+			<th>Returned - Detail</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Data</td>
+			<td>All Movies</td>
+			<td>/data/movies</td>
+			<td>GET</td>
+			<td>Return all movies</td>
+			<td>N/A</td>
+			<td>N/A</td>
+			<td>JSON Object - Array of all movies ($movieBasic)</td>
+			<td>{&quot;movieArray&quot;:[$movieBasic #1, $movieBasic #2, etc...]}</td>
+		</tr>
+		<tr>
+			<td>Data</td>
+			<td>Movie</td>
+			<td>/data/movies/:Title</td>
+			<td>GET</td>
+			<td>Return data on single specified movie</td>
+			<td>N/A</td>
+			<td>N/A</td>
+			<td>JSON Object - $movieDetailed</td>
+			<td>
+			<p>$movieDetail</p>
+			</td>
+		</tr>
+		<tr>
+			<td>Data</td>
+			<td>Genre</td>
+			<td>/data/genres/:Genre</td>
+			<td>GET</td>
+			<td>Return data on single specified genre</td>
+			<td>N/A</td>
+			<td>N/A</td>
+			<td><span style="font-family:Arial; font-size:10pt">JSON Object - $genre and array of movies in that genre ($movieBasic)</span></td>
+			<td>{&quot;basicData&quot;:$genre, &quot;movieArray&quot;:[$movieBasic #1, $movieBasic #2, etc...]}</td>
+		</tr>
+		<tr>
+			<td>Data</td>
+			<td>Director</td>
+			<td>/data/directors/:Director</td>
+			<td>GET</td>
+			<td>Return data on single specified director</td>
+			<td>N/A</td>
+			<td>N/A</td>
+			<td>JSON Object - $director and array of movies by that director ($movieBasic)</td>
+			<td>{&quot;basicData&quot;:$director, &quot;movieArray&quot;:[$movieBasic #1, movieBasic #2, etc...]</td>
+		</tr>
+		<tr>
+			<td style="height:21px; vertical-align:bottom">User</td>
+			<td style="height:21px; vertical-align:bottom">Register</td>
+			<td style="height:21px; vertical-align:bottom">/users/register</td>
+			<td style="height:21px; vertical-align:bottom">POST</td>
+			<td style="height:21px; vertical-align:bottom">Register user</td>
+			<td style="height:21px; vertical-align:bottom">JSON Object</td>
+			<td style="height:21px; vertical-align:bottom">{&quot;Username&quot;: [string], &quot;Password&quot;:[string]}</td>
+			<td style="height:21px; vertical-align:bottom">Sucess/Falure Code</td>
+			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="height:21px; vertical-align:bottom">User</td>
+			<td style="height:21px; vertical-align:bottom">Login</td>
+			<td style="height:21px; vertical-align:bottom">/users/login/:Username</td>
+			<td style="height:21px; vertical-align:bottom">POST</td>
+			<td style="height:21px; vertical-align:bottom">Login User</td>
+			<td style="height:21px; vertical-align:bottom">Password</td>
+			<td style="height:21px; vertical-align:bottom">Format?</td>
+			<td style="height:21px; vertical-align:bottom">Sucess/Falure Code</td>
+			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="height:21px; vertical-align:bottom">User</td>
+			<td style="height:21px; vertical-align:bottom">User Info</td>
+			<td style="height:21px; vertical-align:bottom">/users/:Username</td>
+			<td style="height:21px; vertical-align:bottom">GET</td>
+			<td style="height:21px; vertical-align:bottom">Return current user info</td>
+			<td style="height:21px; vertical-align:bottom">N/A</td>
+			<td style="height:21px; vertical-align:bottom">N/A</td>
+			<td style="height:21px; vertical-align:bottom">JSON Object - Current state of user info</td>
+			<td style="height:21px; vertical-align:bottom">$userInfo</td>
+		</tr>
+		<tr>
+			<td style="height:21px; vertical-align:bottom">User</td>
+			<td style="height:21px; vertical-align:bottom">Update User</td>
+			<td style="height:21px; vertical-align:bottom">/users/:Username</td>
+			<td style="height:21px; vertical-align:bottom">PUT</td>
+			<td style="height:21px; vertical-align:bottom">Update user info</td>
+			<td style="height:21px; vertical-align:bottom">JSON Object</td>
+			<td style="height:21px; vertical-align:bottom">{&quot;Username&quot;:[string], &quot;Password&quot;:[string], &quot;Email&quot;:[String/Email], &quot;Date of Birth&quot;:[date],...}</td>
+			<td style="height:21px; vertical-align:bottom">JSON Object - New state of user info</td>
+			<td style="height:21px; vertical-align:bottom">$userInfo</td>
+		</tr>
+		<tr>
+			<td style="height:21px; vertical-align:bottom">User</td>
+			<td style="height:21px; vertical-align:bottom">Favorites Add</td>
+			<td style="height:21px; vertical-align:bottom">/users/:Username/favorites/:MovieID</td>
+			<td style="height:21px; vertical-align:bottom">POST</td>
+			<td style="height:21px; vertical-align:bottom">Add movie to users own favorites list</td>
+			<td style="height:21px; vertical-align:bottom">N/A</td>
+			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
+			<td style="height:21px; vertical-align:bottom">JSON Object - New state of favorites</td>
+			<td style="border-right:1px solid transparent; height:21px; vertical-align:bottom">
+			<p>{[movieID1, movieID2, etc..]}</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="height:21px; vertical-align:bottom">User</td>
+			<td style="height:21px; vertical-align:bottom">Favorites Remove</td>
+			<td style="height:21px; vertical-align:bottom">/users/:Username/favorites/:MovieID</td>
+			<td style="height:21px; vertical-align:bottom">DELETE</td>
+			<td style="height:21px; vertical-align:bottom">Remove movie from users own favorites list</td>
+			<td style="height:21px; vertical-align:bottom">N/A</td>
+			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
+			<td style="height:21px; vertical-align:bottom">JSON Object - New state of favorites</td>
+			<td style="border-right:1px solid transparent; height:21px; vertical-align:bottom">
+			<p>{[movieID1, movieID2, etc..]}</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="height:21px; vertical-align:bottom">User</td>
+			<td style="height:21px; vertical-align:bottom">Deregister</td>
+			<td style="height:21px; vertical-align:bottom">/users/:Username</td>
+			<td style="height:21px; vertical-align:bottom">DELETE</td>
+			<td style="height:21px; vertical-align:bottom">Deregister user</td>
+			<td style="height:21px; vertical-align:bottom">N/A</td>
+			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
+			<td style="height:21px; vertical-align:bottom">Sucess/Falure Code</td>
+			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="height:21px; vertical-align:bottom">Other</td>
+			<td style="height:21px; vertical-align:bottom">Index</td>
+			<td style="height:21px; vertical-align:bottom">/</td>
+			<td style="height:21px; vertical-align:bottom">GET</td>
+			<td style="height:21px; vertical-align:bottom">Home page</td>
+			<td style="height:21px; vertical-align:bottom">N/A</td>
+			<td style="height:21px; vertical-align:bottom">N/A</td>
+			<td style="height:21px; vertical-align:bottom">index.html</td>
+			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="height:21px; vertical-align:bottom">Other</td>
+			<td style="height:21px; vertical-align:bottom">Documentation</td>
+			<td style="height:21px; vertical-align:bottom">/documentation</td>
+			<td style="height:21px; vertical-align:bottom">GET</td>
+			<td style="height:21px; vertical-align:bottom">Give documentation</td>
+			<td style="height:21px; vertical-align:bottom">N/A</td>
+			<td style="height:21px; vertical-align:bottom">N/A</td>
+			<td style="height:21px; vertical-align:bottom">documentation.html</td>
+			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
