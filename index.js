@@ -21,18 +21,27 @@ const app = express(),
 // Init body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+// Setup Logging
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.log'), {flags: 'a'});
 
+// Logging
 app.use(morgan('combined', {stream: accessLogStream}));
 
+
+// Endpoints and handling functions
+
+// Home/Index
 app.get('/', (req, res) => {
     res.sendFile('public/index.html', {root: __dirname});
 });
 
+// Documentation
 app.get('/documentation', (req, res) => {
     res.sendFile('public/documentation.html', {root:__dirname});
 });
 
+// All movies
 app.get('/data/movies', (req, res) => {
     Movies.find()
     .then((movies) => {
@@ -48,6 +57,7 @@ app.get('/data/movies', (req, res) => {
     });
 });
 
+// Movie 
 app.get('/data/movies/:title', (req, res) => {
     Movies.findOne({Title: req.params.title})
     .then((movie) => {
@@ -59,6 +69,7 @@ app.get('/data/movies/:title', (req, res) => {
     });
 });
 
+// Genre
 app.get('/data/genres/:genre', (req, res) => {
     Movies.find({'Genre.Name': req.params.genre})
     .then((movies) => {
@@ -76,6 +87,7 @@ app.get('/data/genres/:genre', (req, res) => {
     });
 });
 
+// Director
 app.get('/data/directors/:director', (req, res) => {
     Movies.find({'Director.Name': req.params.director})
     .then((movies) => {
@@ -93,6 +105,7 @@ app.get('/data/directors/:director', (req, res) => {
     });
 });
 
+// Register
 app.post('/users/register', (req, res) => {
     Users.findOne({Username: req.body.Username})
     .then((user) => {
@@ -118,10 +131,12 @@ app.post('/users/register', (req, res) => {
     });
 });
 
+// Login
 app.post('/users/login/:username', (req, res) => {
     res.send(req.params.username + '.json');
 });
 
+// User Info
 app.get('/users/:username', (req, res) => {
     Users.findOne({Username: req.params.username})
     .then((user) => {
@@ -133,6 +148,7 @@ app.get('/users/:username', (req, res) => {
     });
 });
 
+// Update User
 app.put('/users/:username', (req, res) => {
     Users.findOneAndUpdate({Username: req.params.username},
         {$set:
@@ -154,6 +170,7 @@ app.put('/users/:username', (req, res) => {
     });
 });
 
+// Favorites Add
 app.post('/users/:username/favorites/:movieId', (req, res) => {
     Users.findOneAndUpdate(
         {Username: req.params.username},
@@ -171,6 +188,7 @@ app.post('/users/:username/favorites/:movieId', (req, res) => {
     });
 });
 
+// Favourites Remove
 app.delete('/users/:username/favorites/:movieId', (req, res) => {
     Users.findOneAndUpdate(
         {Username: req.params.username},
@@ -188,6 +206,7 @@ app.delete('/users/:username/favorites/:movieId', (req, res) => {
     }); 
 });
 
+// Deregister
 app.delete('/users/:username', (req, res) => {
     Users.findOneAndRemove({Username: req.params.username})
         .then((user) => {
@@ -205,6 +224,7 @@ app.delete('/users/:username', (req, res) => {
 
 app.use(express.static('public'));
 
+// General error handling
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Borked!');
