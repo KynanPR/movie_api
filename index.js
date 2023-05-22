@@ -172,7 +172,20 @@ app.post('/users/:username/favorites/:movieId', (req, res) => {
 });
 
 app.delete('/users/:username/favorites/:movieId', (req, res) => {
-    res.send(req.params.username + '_fav.json - ' + req.params.movieId + ' removed');
+    Users.findOneAndUpdate(
+        {Username: req.params.username},
+        {
+            $pull: {FavoriteMovies: req.params.movieId}
+        },
+        {new: true}
+    )
+    .then((updatedUser) => {
+        res.status(200).json(updatedUser);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    }); 
 });
 
 app.delete('/users/:username', (req, res) => {
