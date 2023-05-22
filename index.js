@@ -1,10 +1,26 @@
+// Modules
 const express = require('express'),
+    bodyParser = require('body-parser');
     morgan = require('morgan'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    mongoose = require('mongoose'),
+    Models = require('./models.js');
 
-const app = express();
+// Connect Mongoose to db
+mongoose.connect(
+    'mongodb://localhost:27017/movies',
+    {useNewUrlParser: true, useUnifiedTopology: true, family: 4}
+    );
 
+// Import Mongoose models
+const app = express(),
+    Movies = Models.Movie,
+    Users = Models.User;
+
+// Init body parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.log'), {flags: 'a'});
 
 app.use(morgan('combined', {stream: accessLogStream}));
