@@ -94,7 +94,28 @@ app.get('/data/directors/:director', (req, res) => {
 });
 
 app.post('/users/register', (req, res) => {
-    res.send('Registering!');
+    Users.findOne({Username: req.body.Username})
+    .then((user) => {
+        if (user) {
+            return res.status(400).send(req.body.Username + ' already exists');
+        } else {
+            Users.create({
+                Username: req.body.Username,
+                Password: req.body.Password,
+                Email: req.body.Email,
+                Birthday: req.body.Birthday
+            })
+            .then((user) => {res.status(201).json(user)})
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            })
+        }
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 app.post('/users/login/:username', (req, res) => {
