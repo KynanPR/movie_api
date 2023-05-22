@@ -18,39 +18,65 @@
 			<th>Name</th>
 			<th>Tag</th>
 			<th>Description</th>
-			<th>Format</th>
+			<th>Mongoose Schema</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td>Movie Data - Basic</td>
-			<td>$movieBasic</td>
-			<td>Basic data about a movie for large and initial queries</td>
-			<td>{&quot;movieId&quot;:[MID], &quot;Title&quot;:[string], &quot;Year&quot;:[yyyy]}</td>
-		</tr>
-		<tr>
-			<td>Movie Data - Detail</td>
-			<td>$movieDetail</td>
+			<td>Movie Data</td>
+			<td>$movie</td>
 			<td>Full detailed data about a movie</td>
-			<td>{&quot;movieId&quot;:[MID], &quot;Title&quot;:[string], &quot;Year&quot;:[yyyy], $genre, $director, &quot;description&quot;:[string]}</td>
-		</tr>
-		<tr>
-			<td>Genre Data</td>
-			<td>$genre</td>
-			<td>Basic data about a genre</td>
-			<td>{&quot;genreId&quot;:[GID], &quot;genre&quot;:[string], &quot;movieCount&quot;:[int]}</td>
-		</tr>
-		<tr>
-			<td>Director Data</td>
-			<td>$director</td>
-			<td>Basic data about a director</td>
-			<td>{&quot;directorId&quot;:[DID], &quot;director&quot;:[string], &quot;yob&quot;:[yyyy], &quot;yod&quot;:[yyyy], &quot;movieCount&quot;:[int]}</td>
+			<td>
+			<p>{&nbsp;&nbsp;</p>
+
+			<p>&nbsp;&nbsp;&nbsp; Title: {type: String, required: true},</p>
+
+			<p>&nbsp; &nbsp; Description: {type: String, required: true},</p>
+
+			<p>&nbsp; &nbsp; Genre: {</p>
+
+			<p>&nbsp; &nbsp; &nbsp; &nbsp; Name: String,</p>
+
+			<p>&nbsp; &nbsp; &nbsp; &nbsp; Description: String</p>
+
+			<p>&nbsp; &nbsp; },</p>
+
+			<p>&nbsp; &nbsp; Director: {</p>
+
+			<p>&nbsp; &nbsp; &nbsp; &nbsp; Name: String,</p>
+
+			<p>&nbsp; &nbsp; &nbsp; &nbsp; Bio: String</p>
+
+			<p>&nbsp; &nbsp; },</p>
+
+			<p>&nbsp; &nbsp; Actors: [String],</p>
+
+			<p>&nbsp; &nbsp; ImagePath: String,</p>
+
+			<p>&nbsp; &nbsp; Featured: Boolean</p>
+
+			<p>}</p>
+			</td>
 		</tr>
 		<tr>
 			<td>User Info</td>
 			<td>$userInfo</td>
 			<td>Basic user info</td>
-			<td>{&quot;Username&quot;:[string], &quot;Name&quot;:[string]}</td>
+			<td>
+			<p>{</p>
+
+			<p>&nbsp; &nbsp; Username: {type: String, required: true},</p>
+
+			<p>&nbsp; &nbsp; Password: {type: String, required: true},</p>
+
+			<p>&nbsp; &nbsp; Email: {type: String, required: true},</p>
+
+			<p>&nbsp; &nbsp; Birthday: Date,</p>
+
+			<p>&nbsp; &nbsp; FavoriteMovies: [{type: mongoose.Schema.Types.ObjectId, ref: &#39;Movie&#39;}]</p>
+
+			<p>}</p>
+			</td>
 		</tr>
 	</tbody>
 </table>
@@ -77,46 +103,70 @@
 			<td>All Movies</td>
 			<td>/data/movies</td>
 			<td>GET</td>
-			<td>Return all movies</td>
+			<td>Return all movie titles</td>
 			<td>N/A</td>
 			<td>N/A</td>
-			<td>JSON Object - Array of all movies ($movieBasic)</td>
-			<td>{&quot;movieArray&quot;:[$movieBasic #1, $movieBasic #2, etc...]}</td>
+			<td>JSON Object - Array of titles</td>
+			<td>[&quot;[Movie Title 1]&quot;, &quot;[Movie Title 2]&quot;, ...]</td>
 		</tr>
 		<tr>
 			<td>Data</td>
 			<td>Movie</td>
-			<td>/data/movies/:Title</td>
+			<td>/data/movies/:title</td>
 			<td>GET</td>
 			<td>Return data on single specified movie</td>
 			<td>N/A</td>
 			<td>N/A</td>
-			<td>JSON Object - $movieDetailed</td>
+			<td>JSON Object - $movie</td>
 			<td>
-			<p>$movieDetail</p>
+			<p>$movie</p>
 			</td>
 		</tr>
 		<tr>
 			<td>Data</td>
 			<td>Genre</td>
-			<td>/data/genres/:Genre</td>
+			<td>/data/genres/:genre</td>
 			<td>GET</td>
-			<td>Return data on single specified genre</td>
+			<td>Return all movies with specified genre</td>
 			<td>N/A</td>
 			<td>N/A</td>
-			<td><span style="font-family:Arial; font-size:10pt">JSON Object - $genre and array of movies in that genre ($movieBasic)</span></td>
-			<td>{&quot;basicData&quot;:$genre, &quot;movieArray&quot;:[$movieBasic #1, $movieBasic #2, etc...]}</td>
+			<td><span style="font-family:Arial; font-size:10pt">JSON Object - Array of $movie</span></td>
+			<td>
+			<p>[</p>
+
+			<p>&nbsp;&nbsp;&nbsp; $movie1,</p>
+
+			<p>&nbsp;&nbsp;&nbsp; $movie2,</p>
+
+			<p>&nbsp;&nbsp;&nbsp; ...</p>
+
+			<p>&nbsp;&nbsp;&nbsp; $movieN</p>
+
+			<p>]</p>
+			</td>
 		</tr>
 		<tr>
 			<td>Data</td>
 			<td>Director</td>
-			<td>/data/directors/:Director</td>
+			<td>/data/directors/:director</td>
 			<td>GET</td>
-			<td>Return data on single specified director</td>
+			<td>Return all movies by specific director</td>
 			<td>N/A</td>
 			<td>N/A</td>
-			<td>JSON Object - $director and array of movies by that director ($movieBasic)</td>
-			<td>{&quot;basicData&quot;:$director, &quot;movieArray&quot;:[$movieBasic #1, movieBasic #2, etc...]</td>
+			<td>JSON Object - Array if $Movie</td>
+			<td>
+			<p>{[</p>
+
+			<p>&nbsp;&nbsp;&nbsp; $movie1,</p>
+
+			<p>&nbsp;&nbsp;&nbsp; $movie2,</p>
+
+			<p>&nbsp;&nbsp;&nbsp; ...</p>
+
+			<p>&nbsp;&nbsp;&nbsp; $movieN</p>
+
+			<p>]}</p>
+			</td>
 		</tr>
 		<tr>
 			<td style="height:21px; vertical-align:bottom">User</td>
@@ -125,14 +175,14 @@
 			<td style="height:21px; vertical-align:bottom">POST</td>
 			<td style="height:21px; vertical-align:bottom">Register user</td>
 			<td style="height:21px; vertical-align:bottom">JSON Object</td>
-			<td style="height:21px; vertical-align:bottom">{&quot;Username&quot;: [string], &quot;Password&quot;:[string]}</td>
-			<td style="height:21px; vertical-align:bottom">Sucess/Falure Code</td>
-			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
+			<td style="height:21px; vertical-align:bottom">$userInfo</td>
+			<td style="height:21px; vertical-align:bottom">On success - Newly created user</td>
+			<td style="height:21px; vertical-align:bottom">$userInfo</td>
 		</tr>
 		<tr>
 			<td style="height:21px; vertical-align:bottom">User</td>
 			<td style="height:21px; vertical-align:bottom">Login</td>
-			<td style="height:21px; vertical-align:bottom">/users/login/:Username</td>
+			<td style="height:21px; vertical-align:bottom">/users/login/:username</td>
 			<td style="height:21px; vertical-align:bottom">POST</td>
 			<td style="height:21px; vertical-align:bottom">Login User</td>
 			<td style="height:21px; vertical-align:bottom">Password</td>
@@ -143,7 +193,7 @@
 		<tr>
 			<td style="height:21px; vertical-align:bottom">User</td>
 			<td style="height:21px; vertical-align:bottom">User Info</td>
-			<td style="height:21px; vertical-align:bottom">/users/:Username</td>
+			<td style="height:21px; vertical-align:bottom">/users/:username</td>
 			<td style="height:21px; vertical-align:bottom">GET</td>
 			<td style="height:21px; vertical-align:bottom">Return current user info</td>
 			<td style="height:21px; vertical-align:bottom">N/A</td>
@@ -154,50 +204,50 @@
 		<tr>
 			<td style="height:21px; vertical-align:bottom">User</td>
 			<td style="height:21px; vertical-align:bottom">Update User</td>
-			<td style="height:21px; vertical-align:bottom">/users/:Username</td>
+			<td style="height:21px; vertical-align:bottom">/users/:username</td>
 			<td style="height:21px; vertical-align:bottom">PUT</td>
 			<td style="height:21px; vertical-align:bottom">Update user info</td>
 			<td style="height:21px; vertical-align:bottom">JSON Object</td>
-			<td style="height:21px; vertical-align:bottom">{&quot;Username&quot;:[string], &quot;Password&quot;:[string], &quot;Email&quot;:[String/Email], &quot;Date of Birth&quot;:[date],...}</td>
+			<td style="height:21px; vertical-align:bottom">$userInfo</td>
 			<td style="height:21px; vertical-align:bottom">JSON Object - New state of user info</td>
 			<td style="height:21px; vertical-align:bottom">$userInfo</td>
 		</tr>
 		<tr>
 			<td style="height:21px; vertical-align:bottom">User</td>
 			<td style="height:21px; vertical-align:bottom">Favorites Add</td>
-			<td style="height:21px; vertical-align:bottom">/users/:Username/favorites/:MovieID</td>
+			<td style="height:21px; vertical-align:bottom">/users/:username/favorites/:movieId</td>
 			<td style="height:21px; vertical-align:bottom">POST</td>
-			<td style="height:21px; vertical-align:bottom">Add movie to users own favorites list</td>
+			<td style="height:21px; vertical-align:bottom">Add specificed movie to specified users favorite movie list</td>
 			<td style="height:21px; vertical-align:bottom">N/A</td>
 			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
-			<td style="height:21px; vertical-align:bottom">JSON Object - New state of favorites</td>
+			<td style="height:21px; vertical-align:bottom">JSON Object - New state of user</td>
 			<td style="border-right:1px solid transparent; height:21px; vertical-align:bottom">
-			<p>{[movieID1, movieID2, etc..]}</p>
+			<p>$userInfo</p>
 			</td>
 		</tr>
 		<tr>
 			<td style="height:21px; vertical-align:bottom">User</td>
 			<td style="height:21px; vertical-align:bottom">Favorites Remove</td>
-			<td style="height:21px; vertical-align:bottom">/users/:Username/favorites/:MovieID</td>
+			<td style="height:21px; vertical-align:bottom">/users/:username/favorites/:movieId</td>
 			<td style="height:21px; vertical-align:bottom">DELETE</td>
 			<td style="height:21px; vertical-align:bottom">Remove movie from users own favorites list</td>
 			<td style="height:21px; vertical-align:bottom">N/A</td>
 			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
-			<td style="height:21px; vertical-align:bottom">JSON Object - New state of favorites</td>
+			<td style="height:21px; vertical-align:bottom">JSON Object - New state of user</td>
 			<td style="border-right:1px solid transparent; height:21px; vertical-align:bottom">
-			<p>{[movieID1, movieID2, etc..]}</p>
+			<p>$userInfo</p>
 			</td>
 		</tr>
 		<tr>
 			<td style="height:21px; vertical-align:bottom">User</td>
 			<td style="height:21px; vertical-align:bottom">Deregister</td>
-			<td style="height:21px; vertical-align:bottom">/users/:Username</td>
+			<td style="height:21px; vertical-align:bottom">/users/:username</td>
 			<td style="height:21px; vertical-align:bottom">DELETE</td>
 			<td style="height:21px; vertical-align:bottom">Deregister user</td>
 			<td style="height:21px; vertical-align:bottom">N/A</td>
 			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
 			<td style="height:21px; vertical-align:bottom">Sucess/Falure Code</td>
-			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
+			<td style="height:21px; vertical-align:bottom">Code + Short Message</td>
 		</tr>
 		<tr>
 			<td style="height:21px; vertical-align:bottom">Other</td>
