@@ -49,7 +49,14 @@ app.get('/data/movies', (req, res) => {
 });
 
 app.get('/data/movies/:title', (req, res) => {
-    res.send(req.params.title + '.json');
+    Movies.findOne({Title: req.params.title})
+    .then((movie) => {
+        res.status(200).json(movie);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 app.get('/data/genres/:genre', (req, res) => {
