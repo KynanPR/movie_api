@@ -189,7 +189,18 @@ app.delete('/users/:username/favorites/:movieId', (req, res) => {
 });
 
 app.delete('/users/:username', (req, res) => {
-    res.send(req.params.username + ' deleted');
+    Users.findOneAndRemove({Username: req.params.username})
+        .then((user) => {
+            if (!user) {
+                res.status(400).send(req.params.username + ' was not found');
+            } else {
+                res.status(200).send(req.params.username + ' was deleted');
+            }
+            })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
 });
 
 app.use(express.static('public'));
