@@ -123,7 +123,14 @@ app.post('/users/login/:username', (req, res) => {
 });
 
 app.get('/users/:username', (req, res) => {
-    res.send(req.params.username + '.json');
+    Users.findOne({Username: req.params.username})
+    .then((user) => {
+        res.status(200).json(user);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 app.put('/users/:username', (req, res) => {
