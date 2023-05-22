@@ -134,7 +134,24 @@ app.get('/users/:username', (req, res) => {
 });
 
 app.put('/users/:username', (req, res) => {
-    res.send(req.params.username + '.json updated');
+    Users.findOneAndUpdate({Username: req.params.username},
+        {$set:
+            {
+                Username: req.body.Username,
+                Password: req.body.Password,
+                Email: req.body.Email,
+                Birthday: req.body.Birthday
+            }
+        },
+        {new: true}
+    )
+    .then((updatedUser) => {
+        res.status(200).json(updatedUser);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 app.post('/users/:username/favorites/:movieId', (req, res) => {
