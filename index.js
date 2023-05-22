@@ -34,7 +34,18 @@ app.get('/documentation', (req, res) => {
 });
 
 app.get('/data/movies', (req, res) => {
-    res.send('All movies.json');
+    Movies.find()
+    .then((movies) => {
+        let moviesList = []
+        movies.forEach(movie => {
+            moviesList.push(movie.Title)
+        });
+        res.status(200).json(moviesList);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 app.get('/data/movies/:title', (req, res) => {
