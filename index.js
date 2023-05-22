@@ -77,7 +77,20 @@ app.get('/data/genres/:genre', (req, res) => {
 });
 
 app.get('/data/directors/:director', (req, res) => {
-    res.send(req.params.director + '.json');
+    Movies.find({'Director.Name': req.params.director})
+    .then((movies) => {
+        if (!movies) {
+            res.status(400).send(
+                'There are no movies in the database with the director - ' + req.params.genre
+            )
+        } else {
+            res.status(200).json(movies);
+        }
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 app.post('/users/register', (req, res) => {
