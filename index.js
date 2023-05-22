@@ -26,7 +26,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.log'), {f
 app.use(morgan('combined', {stream: accessLogStream}));
 
 app.get('/', (req, res) => {
-    res.send('Movies API');
+    res.sendFile('public/index.html', {root: __dirname});
 });
 
 app.get('/documentation', (req, res) => {
