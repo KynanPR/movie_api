@@ -84,15 +84,15 @@ app.get('/movies/genres/:genre', (req, res) => {
 });
 
 // Director
-    Movies.find({'Director.Name': req.params.director})
-    .then((movies) => {
-        if (!movies) {
 app.get('/movies/directors/:director', (req, res) => {
+    Movies.findOne({'Director.Name': req.params.director})
+    .then((movie) => {
+        if (!movie) {
             res.status(400).send(
-                'There are no movies in the database with the director - ' + req.params.genre
+                'There are no movies in the database with the director - ' + req.params.director
             )
         } else {
-            res.status(200).json(movies);
+            res.status(200).json(movie.Director);
         }
     })
     .catch((err) => {
