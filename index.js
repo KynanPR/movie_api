@@ -66,15 +66,15 @@ app.get('/movies/:title', (req, res) => {
 });
 
 // Genre
-    Movies.find({'Genre.Name': req.params.genre})
-    .then((movies) => {
-        if (!movies) {
 app.get('/movies/genres/:genre', (req, res) => {
+    Movies.findOne({'Genre.Name': req.params.genre})
+    .then((movie) => {
+        if (!movie) {
             res.status(400).send(
                 'There are no movies in the database with the genre - ' + req.params.genre
             )
         } else {
-            res.status(200).json(movies);
+            res.status(200).json(movie.Genre);
         }
     })
     .catch((err) => {
