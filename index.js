@@ -42,7 +42,7 @@ app.get('/documentation', (req, res) => {
 });
 
 // All movies
-app.get('/data/movies', (req, res) => {
+app.get('/movies', (req, res) => {
     Movies.find()
     .then((movies) => {
         let moviesList = []
@@ -58,7 +58,7 @@ app.get('/data/movies', (req, res) => {
 });
 
 // Movie 
-app.get('/data/movies/:title', (req, res) => {
+app.get('/movies/:title', (req, res) => {
     Movies.findOne({Title: req.params.title})
     .then((movie) => {
         res.status(200).json(movie);
@@ -70,10 +70,10 @@ app.get('/data/movies/:title', (req, res) => {
 });
 
 // Genre
-app.get('/data/genres/:genre', (req, res) => {
     Movies.find({'Genre.Name': req.params.genre})
     .then((movies) => {
         if (!movies) {
+app.get('/movies/genres/:genre', (req, res) => {
             res.status(400).send(
                 'There are no movies in the database with the genre - ' + req.params.genre
             )
@@ -88,10 +88,10 @@ app.get('/data/genres/:genre', (req, res) => {
 });
 
 // Director
-app.get('/data/directors/:director', (req, res) => {
     Movies.find({'Director.Name': req.params.director})
     .then((movies) => {
         if (!movies) {
+app.get('/movies/directors/:director', (req, res) => {
             res.status(400).send(
                 'There are no movies in the database with the director - ' + req.params.genre
             )
@@ -106,7 +106,7 @@ app.get('/data/directors/:director', (req, res) => {
 });
 
 // Register
-app.post('/users/register', (req, res) => {
+app.post('/users', (req, res) => {
     Users.findOne({Username: req.body.Username})
     .then((user) => {
         if (user) {
