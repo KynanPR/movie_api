@@ -1,275 +1,280 @@
-<p>Movie API - Docs</p>
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>Movie API</h1>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>myFlix API documentation</title>
+</head>
 
-<h2>Purpose</h2>
+<body>
+	<style>
+		* {
+			font-family: Arial, Helvetica, sans-serif;
+		}
+		pre {
+			padding: 10px;
+			background-color: lightgrey;
+		}
 
-<p>This API is a project as part of my Full Stack Web Developer course at Career Foundry</p>
+		table td {
+			padding: 10px;
+		}
+	</style>
 
-<p>It is an API to query for details about films</p>
+	<div>
+		<h1>Movie API - Docs</h1>
 
-<h2>Standard Data Objects</h2>
+		<h2>Purpose</h2>
 
-<p>There are a number of data objects used throughout this API which are outlined here so they can be abreviated later</p>
+		<p>
+			This API is a project as part of my Full Stack Web Developer course at
+			Career Foundry
+		</p>
+	</div>
 
-<table border="2">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Tag</th>
-			<th>Description</th>
-			<th>Mongoose Schema</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>Movie Data</td>
-			<td>$movie</td>
-			<td>Full detailed data about a movie</td>
-			<td>
-			<p>{&nbsp;&nbsp;</p>
+	<table border="2">
+		<thead>
+			<tr>
+				<th>URL</th>
+				<th>HTTP Method</th>
+				<th>Description</th>
+				<th>Request Body Data Format</th>
+				<th>Response Body Data Format</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>/</td>
+				<td>GET</td>
+				<td>Return Index/Homepage</td>
+				<td>N/A</td>
+				<td>
+					<p>index.html</p>
+				</td>
+			</tr>
+			<tr>
+				<td>/documentaion</td>
+				<td>GET</td>
+				<td>Return Documentation page</td>
+				<td>N/A</td>
+				<td>
+					<p>documentation.html</p>
+				</td>
+			</tr>
+			<tr>
+				<td>/movies</td>
+				<td>GET</td>
+				<td>Return all movie titles</td>
+				<td>N/A</td>
+				<td>
+					<p>Array of JSON Objects</p>
+					<pre><code>[
+	{
+		"Genre": {
+			"Name": "Thriller",
+			"Description": "Thriller film, also known as suspense film or suspense thriller, is a broad film genre that involves excitement and suspense in the audience."
+		},
+		"Director": {
+			"Name": "Jonathan Demme",
+			"Bio": "Robert Jonathan Demme was an American director, producer, and screenwriter.",
+			"Birth": "1944",
+			"Death": "2017"
+		},
+		"Actors": [],
+		"_id": "6401f340d4fe1b5aca6c54c7",
+		"Title": "Silence of the Lambs",
+		"Description": "aknsadioeon",
+		"ImagePath": "silenceofthelambs.png",
+		"Featured": true
+	},
+	{movie2},
+	...,
+	{movieLast}
+]</code></pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/movies/:title</td>
+				<td>GET</td>
+				<td>Return data on single specified movie</td>
+				<td>N/A</td>
+				<td>
+					<p>JSON Object</p>
+					<pre><code>{
+	"Genre": {
+		"Name": "Romance",
+		"Description": "Icky kissy stuff"
+	},
+	"Director": {
+		"Name": "Frank Filmey",
+		"Bio": "Mr Filmey made films all his life. Good films, bad films, ugly films.",
+		"Birth": "1945-06-04",
+		"Death": "2006-11-12"
+	},
+	"Actors": [],
+	"_id": "640f7af9cb92975f54f0696d",
+	"Title": "Good Will Hunting",
+	"Description": "Good maths man"
+}</code></pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/movies/genres/:genre</td>
+				<td>GET</td>
+				<td>Return data on single specified genre</td>
+				<td>N/A</td>
+				<td>
+					<p>JSON Object</p>
+					<pre><code>{
+	"Name": "Comedy",
+	"Description": "Make haha funny films."
+}</code></pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/movies/directors/:director</td>
+				<td>GET</td>
+				<td>Return data on single specified director</td>
+				<td>N/A</td>
+				<td>
+					<p>JSON Object</p>
+					<pre><code>{
+	"Name": "Mike Moviee",
+	"Bio": "Sir Moviee was knighted because he made such great movies.",
+	"Birth": "1955-01-25",
+	"Death": null
+}</code></pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/users</td>
+				<td>POST</td>
+				<td>Register a new user</td>
+				<td>
+					<p>JSON Object</p>
+					<pre><code>{
+	"Username": "RPnanyK",
+	"Password": "abc123",
+	"Email": "asdf@gmail.com",
+	"Birthday": "1999-02-01"
+}</code></pre>
+				</td>
+				<td>
+					<p>JSON Object</p>
+					<pre><code>{
+	"Username": "RPnanyK",
+	"Password": "abc123",
+	"Email": "asdf@gmail.com",
+	"Birthday": "1999-02-01T00:00:00.000Z",
+	"FavoriteMovies": [],
+	"_id": "646cd4ef4c264263a1b5aec4",
+	"__v": 0
+}</code></pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/users/:username</td>
+				<td>GET</td>
+				<td>Return data on single specified User</td>
+				<td>
+					<p>N/A</p>
+				</td>
+				<td>
+					<p>JSON Object</p>
+					<pre><code>{
+	"_id": "646cd4954c264263a1b5aebd",
+	"Username": "Kynanananan",
+	"Password": "abc123",
+	"Email": "asdf@gmail.com",
+	"Birthday": "1999-02-01T00:00:00.000Z",
+	"FavoriteMovies": [],
+	"__v": 0
+}</code></pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/users/:username</td>
+				<td>PUT</td>
+				<td>Update data for single specified User</td>
+				<td>
+					<p>JSON Object</p>
+					<pre><code>{
+	"Username": "Kynanananan",
+	"Password": "changedPW",
+	"Email": "asdf@gmail.com",
+	"Birthday": "1899-02-01"
+}</code></pre>
+				</td>
+				<td>
+					<p>JSON Object</p>
+					<pre><code>{
+	"_id": "646cd4954c264263a1b5aebd",
+	"Username": "Kynanananan",
+	"Password": "changedPW",
+	"Email": "asdf@gmail.com",
+	"Birthday": "1899-02-01T00:00:00.000Z",
+	"FavoriteMovies": [],
+	"__v": 0
+}</code></pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/users/:username/favorites/:movieId</td>
+				<td>POST</td>
+				<td>Add specified Movie to specified User's Favorite Movies list</td>
+				<td>
+					<p>N/A</p>
+				</td>
+				<td>
+					<p>JSON Object</p>
+					<pre><code>{
+	"_id": "646cd4954c264263a1b5aebd",
+	"Username": "Kynanananan",
+	"Password": "abc123",
+	"Email": "asdf@gmail.com",
+	"Birthday": "1999-02-01T00:00:00.000Z",
+	"FavoriteMovies": [
+		"640f7af9cb92975f54f0696d"
+	],
+	"__v": 0
+}</code></pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/users/:username/favorites/:movieId</td>
+				<td>Delete</td>
+				<td>Remove specified Movie from specified User's Favorite Movies list</td>
+				<td>
+					<p>N/A</p>
+				</td>
+				<td>
+					<p>JSON Object</p>
+					<pre><code>{
+	"_id": "646cd4954c264263a1b5aebd",
+	"Username": "Kynanananan",
+	"Password": "changedPW",
+	"Email": "asdf@gmail.com",
+	"Birthday": "1899-02-01T00:00:00.000Z",
+	"FavoriteMovies": [],
+	"__v": 0
+}</code></pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/users/:username</td>
+				<td>Delete</td>
+				<td>Deregister a User</td>
+				<td>
+					<p>N/A</p>
+				</td>
+				<td>
+					<p>Message</p>
+					<pre><code>Kynanananan was deleted</code></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
 
-			<p>&nbsp;&nbsp;&nbsp; Title: {type: String, required: true},</p>
-
-			<p>&nbsp; &nbsp; Description: {type: String, required: true},</p>
-
-			<p>&nbsp; &nbsp; Genre: {</p>
-
-			<p>&nbsp; &nbsp; &nbsp; &nbsp; Name: String,</p>
-
-			<p>&nbsp; &nbsp; &nbsp; &nbsp; Description: String</p>
-
-			<p>&nbsp; &nbsp; },</p>
-
-			<p>&nbsp; &nbsp; Director: {</p>
-
-			<p>&nbsp; &nbsp; &nbsp; &nbsp; Name: String,</p>
-
-			<p>&nbsp; &nbsp; &nbsp; &nbsp; Bio: String</p>
-
-			<p>&nbsp; &nbsp; },</p>
-
-			<p>&nbsp; &nbsp; Actors: [String],</p>
-
-			<p>&nbsp; &nbsp; ImagePath: String,</p>
-
-			<p>&nbsp; &nbsp; Featured: Boolean</p>
-
-			<p>}</p>
-			</td>
-		</tr>
-		<tr>
-			<td>User Info</td>
-			<td>$userInfo</td>
-			<td>Basic user info</td>
-			<td>
-			<p>{</p>
-
-			<p>&nbsp; &nbsp; Username: {type: String, required: true},</p>
-
-			<p>&nbsp; &nbsp; Password: {type: String, required: true},</p>
-
-			<p>&nbsp; &nbsp; Email: {type: String, required: true},</p>
-
-			<p>&nbsp; &nbsp; Birthday: Date,</p>
-
-			<p>&nbsp; &nbsp; FavoriteMovies: [{type: mongoose.Schema.Types.ObjectId, ref: &#39;Movie&#39;}]</p>
-
-			<p>}</p>
-			</td>
-		</tr>
-	</tbody>
-</table>
-
-<h2>Endpoints</h2>
-
-<table border="2">
-	<thead>
-		<tr>
-			<th>Catagory</th>
-			<th>Endpoint</th>
-			<th>URL</th>
-			<th>Method</th>
-			<th>Function</th>
-			<th>Sent</th>
-			<th>Sent - Detial</th>
-			<th>Returned</th>
-			<th>Returned - Detail</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>Data</td>
-			<td>All Movies</td>
-			<td>/data/movies</td>
-			<td>GET</td>
-			<td>Return all movie titles</td>
-			<td>N/A</td>
-			<td>N/A</td>
-			<td>JSON Object - Array of titles</td>
-			<td>[&quot;[Movie Title 1]&quot;, &quot;[Movie Title 2]&quot;, ...]</td>
-		</tr>
-		<tr>
-			<td>Data</td>
-			<td>Movie</td>
-			<td>/data/movies/:title</td>
-			<td>GET</td>
-			<td>Return data on single specified movie</td>
-			<td>N/A</td>
-			<td>N/A</td>
-			<td>JSON Object - $movie</td>
-			<td>
-			<p>$movie</p>
-			</td>
-		</tr>
-		<tr>
-			<td>Data</td>
-			<td>Genre</td>
-			<td>/data/genres/:genre</td>
-			<td>GET</td>
-			<td>Return all movies with specified genre</td>
-			<td>N/A</td>
-			<td>N/A</td>
-			<td><span style="font-family:Arial; font-size:10pt">JSON Object - Array of $movie</span></td>
-			<td>
-			<p>[</p>
-
-			<p>&nbsp;&nbsp;&nbsp; $movie1,</p>
-
-			<p>&nbsp;&nbsp;&nbsp; $movie2,</p>
-
-			<p>&nbsp;&nbsp;&nbsp; ...</p>
-
-			<p>&nbsp;&nbsp;&nbsp; $movieN</p>
-
-			<p>]</p>
-			</td>
-		</tr>
-		<tr>
-			<td>Data</td>
-			<td>Director</td>
-			<td>/data/directors/:director</td>
-			<td>GET</td>
-			<td>Return all movies by specific director</td>
-			<td>N/A</td>
-			<td>N/A</td>
-			<td>JSON Object - Array if $Movie</td>
-			<td>
-			<p>{[</p>
-
-			<p>&nbsp;&nbsp;&nbsp; $movie1,</p>
-
-			<p>&nbsp;&nbsp;&nbsp; $movie2,</p>
-
-			<p>&nbsp;&nbsp;&nbsp; ...</p>
-
-			<p>&nbsp;&nbsp;&nbsp; $movieN</p>
-
-			<p>]}</p>
-			</td>
-		</tr>
-		<tr>
-			<td style="height:21px; vertical-align:bottom">User</td>
-			<td style="height:21px; vertical-align:bottom">Register</td>
-			<td style="height:21px; vertical-align:bottom">/users/register</td>
-			<td style="height:21px; vertical-align:bottom">POST</td>
-			<td style="height:21px; vertical-align:bottom">Register user</td>
-			<td style="height:21px; vertical-align:bottom">JSON Object</td>
-			<td style="height:21px; vertical-align:bottom">$userInfo</td>
-			<td style="height:21px; vertical-align:bottom">On success - Newly created user</td>
-			<td style="height:21px; vertical-align:bottom">$userInfo</td>
-		</tr>
-		<tr>
-			<td style="height:21px; vertical-align:bottom">User</td>
-			<td style="height:21px; vertical-align:bottom">Login</td>
-			<td style="height:21px; vertical-align:bottom">/users/login/:username</td>
-			<td style="height:21px; vertical-align:bottom">POST</td>
-			<td style="height:21px; vertical-align:bottom">Login User</td>
-			<td style="height:21px; vertical-align:bottom">Password</td>
-			<td style="height:21px; vertical-align:bottom">Format?</td>
-			<td style="height:21px; vertical-align:bottom">Sucess/Falure Code</td>
-			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
-		</tr>
-		<tr>
-			<td style="height:21px; vertical-align:bottom">User</td>
-			<td style="height:21px; vertical-align:bottom">User Info</td>
-			<td style="height:21px; vertical-align:bottom">/users/:username</td>
-			<td style="height:21px; vertical-align:bottom">GET</td>
-			<td style="height:21px; vertical-align:bottom">Return current user info</td>
-			<td style="height:21px; vertical-align:bottom">N/A</td>
-			<td style="height:21px; vertical-align:bottom">N/A</td>
-			<td style="height:21px; vertical-align:bottom">JSON Object - Current state of user info</td>
-			<td style="height:21px; vertical-align:bottom">$userInfo</td>
-		</tr>
-		<tr>
-			<td style="height:21px; vertical-align:bottom">User</td>
-			<td style="height:21px; vertical-align:bottom">Update User</td>
-			<td style="height:21px; vertical-align:bottom">/users/:username</td>
-			<td style="height:21px; vertical-align:bottom">PUT</td>
-			<td style="height:21px; vertical-align:bottom">Update user info</td>
-			<td style="height:21px; vertical-align:bottom">JSON Object</td>
-			<td style="height:21px; vertical-align:bottom">$userInfo</td>
-			<td style="height:21px; vertical-align:bottom">JSON Object - New state of user info</td>
-			<td style="height:21px; vertical-align:bottom">$userInfo</td>
-		</tr>
-		<tr>
-			<td style="height:21px; vertical-align:bottom">User</td>
-			<td style="height:21px; vertical-align:bottom">Favorites Add</td>
-			<td style="height:21px; vertical-align:bottom">/users/:username/favorites/:movieId</td>
-			<td style="height:21px; vertical-align:bottom">POST</td>
-			<td style="height:21px; vertical-align:bottom">Add specificed movie to specified users favorite movie list</td>
-			<td style="height:21px; vertical-align:bottom">N/A</td>
-			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
-			<td style="height:21px; vertical-align:bottom">JSON Object - New state of user</td>
-			<td style="border-right:1px solid transparent; height:21px; vertical-align:bottom">
-			<p>$userInfo</p>
-			</td>
-		</tr>
-		<tr>
-			<td style="height:21px; vertical-align:bottom">User</td>
-			<td style="height:21px; vertical-align:bottom">Favorites Remove</td>
-			<td style="height:21px; vertical-align:bottom">/users/:username/favorites/:movieId</td>
-			<td style="height:21px; vertical-align:bottom">DELETE</td>
-			<td style="height:21px; vertical-align:bottom">Remove movie from users own favorites list</td>
-			<td style="height:21px; vertical-align:bottom">N/A</td>
-			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
-			<td style="height:21px; vertical-align:bottom">JSON Object - New state of user</td>
-			<td style="border-right:1px solid transparent; height:21px; vertical-align:bottom">
-			<p>$userInfo</p>
-			</td>
-		</tr>
-		<tr>
-			<td style="height:21px; vertical-align:bottom">User</td>
-			<td style="height:21px; vertical-align:bottom">Deregister</td>
-			<td style="height:21px; vertical-align:bottom">/users/:username</td>
-			<td style="height:21px; vertical-align:bottom">DELETE</td>
-			<td style="height:21px; vertical-align:bottom">Deregister user</td>
-			<td style="height:21px; vertical-align:bottom">N/A</td>
-			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
-			<td style="height:21px; vertical-align:bottom">Sucess/Falure Code</td>
-			<td style="height:21px; vertical-align:bottom">Code + Short Message</td>
-		</tr>
-		<tr>
-			<td style="height:21px; vertical-align:bottom">Other</td>
-			<td style="height:21px; vertical-align:bottom">Index</td>
-			<td style="height:21px; vertical-align:bottom">/</td>
-			<td style="height:21px; vertical-align:bottom">GET</td>
-			<td style="height:21px; vertical-align:bottom">Home page</td>
-			<td style="height:21px; vertical-align:bottom">N/A</td>
-			<td style="height:21px; vertical-align:bottom">N/A</td>
-			<td style="height:21px; vertical-align:bottom">index.html</td>
-			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
-		</tr>
-		<tr>
-			<td style="height:21px; vertical-align:bottom">Other</td>
-			<td style="height:21px; vertical-align:bottom">Documentation</td>
-			<td style="height:21px; vertical-align:bottom">/documentation</td>
-			<td style="height:21px; vertical-align:bottom">GET</td>
-			<td style="height:21px; vertical-align:bottom">Give documentation</td>
-			<td style="height:21px; vertical-align:bottom">N/A</td>
-			<td style="height:21px; vertical-align:bottom">N/A</td>
-			<td style="height:21px; vertical-align:bottom">documentation.html</td>
-			<td style="height:21px; vertical-align:bottom">&nbsp;</td>
-		</tr>
-	</tbody>
-</table>
+</html>
