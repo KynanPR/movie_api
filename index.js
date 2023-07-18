@@ -22,6 +22,11 @@ const app = express(),
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+// Authentification & Login Endpoint
+let auth = require('./auth')(app) // Login HTML Authentification
+const passport = require('passport'); // JWT Authentification
+require('./passport');
+
 // Setup Logging
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.log'), {flags: 'a'});
 
@@ -127,10 +132,6 @@ app.post('/users', (req, res) => {
     });
 });
 
-// Login
-app.post('/users/login/:username', (req, res) => {
-    res.send(req.params.username + '.json');
-});
 
 // User Info
 app.get('/users/:username', (req, res) => {
