@@ -41,6 +41,7 @@
 				<th>Description</th>
 				<th>Request Body Data Format</th>
 				<th>Response Body Data Format</th>
+				<th>Authentification</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -52,6 +53,7 @@
 				<td>
 					<p>index.html</p>
 				</td>
+				<td>None</td>
 			</tr>
 			<tr>
 				<td>/documentaion</td>
@@ -61,6 +63,7 @@
 				<td>
 					<p>documentation.html</p>
 				</td>
+				<td>None</td>
 			</tr>
 			<tr>
 				<td>/movies</td>
@@ -93,6 +96,7 @@
 	{movieLast}
 ]</code></pre>
 				</td>
+				<td>JWT - Bearer Token</td>
 			</tr>
 			<tr>
 				<td>/movies/:title</td>
@@ -118,6 +122,7 @@
 	"Description": "Good maths man"
 }</code></pre>
 				</td>
+				<td>JWT - Bearer Token</td>
 			</tr>
 			<tr>
 				<td>/movies/genres/:genre</td>
@@ -131,6 +136,7 @@
 	"Description": "Make haha funny films."
 }</code></pre>
 				</td>
+				<td>JWT - Bearer Token</td>
 			</tr>
 			<tr>
 				<td>/movies/directors/:director</td>
@@ -146,6 +152,7 @@
 	"Death": null
 }</code></pre>
 				</td>
+				<td>JWT - Bearer Token</td>
 			</tr>
 			<tr>
 				<td>/users</td>
@@ -172,6 +179,35 @@
 	"__v": 0
 }</code></pre>
 				</td>
+				<td>None</td>
+			</tr>
+			<tr>
+				<td>/users/login</td>
+				<td>POST</td>
+				<td>Login user and create JWT</td>
+				<td>
+					<p>JSON Object</p>
+					<pre><code>{
+	"Username": "RPnanyK",
+	"Password": "abc123"
+}</code></pre>
+				</td>
+				<td>
+					<p>JSON Object</p>
+					<pre><code>{
+						"user": {
+							"_id": "646cd4d94c264263a1b5aec1",
+							"Username": "KynanPR",
+							"Password": "abc123",
+							"Email": "asdf@gmail.com",
+							"Birthday": "1999-02-01T00:00:00.000Z",
+							"FavoriteMovies": [],
+							"__v": 0
+						},
+						"token": [JWT Bearer Token String]
+}</code></pre>
+				</td>
+				<td>HTML Authentification using Username & Password in request body</td>
 			</tr>
 			<tr>
 				<td>/users/:username</td>
@@ -192,6 +228,7 @@
 	"__v": 0
 }</code></pre>
 				</td>
+				<td>JWT - Bearer Token</td>
 			</tr>
 			<tr>
 				<td>/users/:username</td>
@@ -218,6 +255,7 @@
 	"__v": 0
 }</code></pre>
 				</td>
+				<td>JWT - Bearer Token</td>
 			</tr>
 			<tr>
 				<td>/users/:username/favorites/:movieId</td>
@@ -240,6 +278,7 @@
 	"__v": 0
 }</code></pre>
 				</td>
+				<td>JWT - Bearer Token</td>
 			</tr>
 			<tr>
 				<td>/users/:username/favorites/:movieId</td>
@@ -260,6 +299,7 @@
 	"__v": 0
 }</code></pre>
 				</td>
+				<td>JWT - Bearer Token</td>
 			</tr>
 			<tr>
 				<td>/users/:username</td>
@@ -272,6 +312,7 @@
 					<p>Message</p>
 					<pre><code>Kynanananan was deleted</code></pre>
 				</td>
+				<td>JWT - Bearer Token</td>
 			</tr>
 		</tbody>
 	</table>
